@@ -24,8 +24,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # template directory.
+    # han_duck directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "template"))
+    sys.path.append(str(current_path / "han_duck"))
 
     execute_from_command_line(sys.argv)
