@@ -15,5 +15,5 @@ router.register("user", UserViewSet)
 
 app_name = 'api'
 urlpatterns = [
-                  path('', include("han_duck.apps.users.urls")),
+                  path('', include("django_template.apps.users.urls")),
               ] + router.urls
