@@ -26,7 +26,7 @@ django.setup()
 
 # -- Project information -----------------------------------------------------
 
-project = "django_template"
+project = "mail_glint"
 copyright = """2023, Tuna Lee"""
 author = "Tuna Lee"
 

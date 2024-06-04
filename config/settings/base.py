@@ -13,8 +13,8 @@ from typing import List
 from corsheaders.defaults import default_methods
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# django_template/
-APPS_DIR = ROOT_DIR / "django_template"
+# mail_glint/
+APPS_DIR = ROOT_DIR / "mail_glint"
 env = environ.Env()
 
 # ENVIRONMENT
@@ -113,7 +113,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
-    "django.forms",
+    "django.forms"
 ]
 
 THIRD_PARTY_APPS = [
@@ -159,8 +159,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "django_template.apps.app_templates.apps.ViewsConfig",
-    "django_template.apps.users.apps.UsersConfig",
+    "mail_glint.apps.subscribers.apps.SubscribersConfig",
+    "mail_glint.apps.users.apps.UsersConfig",
+    "mail_glint.apps.articles.apps.ArticlesConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -168,7 +169,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "django_template.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "mail_glint.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -202,7 +203,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-    # {'NAME': 'django_template.utils.validators.CustomPasswordValidator'},
+    # {'NAME': 'mail_glint.utils.validators.CustomPasswordValidator'},
 ]
 
 # MIDDLEWARE
@@ -249,7 +250,7 @@ MEDIA_URL = "/media/"
 TEMPLATES = [
     {
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-        "BACKEND": "django.django_template.backends.django.DjangoTemplates",
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#dirs
         "DIRS": [str(APPS_DIR / "templates")],
         # https://docs.djangoproject.com/en/dev/ref/settings/#app-dirs
@@ -257,15 +258,15 @@ TEMPLATES = [
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             "context_processors": [
-                "django.django_template.context_processors.debug",
-                "django.django_template.context_processors.request",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.django_template.context_processors.i18n",
-                "django.django_template.context_processors.media",
-                "django.django_template.context_processors.static",
-                "django.django_template.context_processors.tz",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "han-duck.utils.context_processors.settings_context",
+                "mail_glint.utils.context_processors.settings_context",
             ],
         },
     }
@@ -297,10 +298,13 @@ X_FRAME_OPTIONS = "DENY"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND",
-    default="django.core.mail.backends.smtp.EmailBackend",
-)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.worksmobile.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 
@@ -366,13 +370,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "django_template.apps.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "mail_glint.apps.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {"signup": "django_template.apps.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "mail_glint.apps.users.forms.UserSignupForm"}
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "django_template.apps.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "mail_glint.apps.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-SOCIALACCOUNT_FORMS = {"signup": "django_template.apps.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "mail_glint.apps.users.forms.UserSocialSignupForm"}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
@@ -383,7 +387,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
-    "EXCEPTION_HANDLER": "django_template.utils.exception_handlers.custom_exception_handler",
+    "EXCEPTION_HANDLER": "mail_glint.utils.exception_handlers.custom_exception_handler",
     "NON_FIELD_ERRORS_KEY": "non_field_errors",
 }
 
@@ -418,7 +422,7 @@ ADMIN_CHARTS_D3_JS_PATH = "bow/d3/d3.js"
 # ------------------------------------------------------------------------------------
 # https://drf-yasg.readthedocs.io/en/stable/settings.html
 SWAGGER_SETTINGS = {
-    "DEFAULT_AUTO_SCHEMA_CLASS": "django_template.utils.api.schema.CustomAutoSchema",
+    "DEFAULT_AUTO_SCHEMA_CLASS": "mail_glint.utils.api.schema.CustomAutoSchema",
     "SECURITY_DEFINITIONS": {
         "Token": {
             "type": "apiKey",
