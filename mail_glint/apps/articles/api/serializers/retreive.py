@@ -38,7 +38,7 @@ class HumanArticleRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = HumanArticle
-        fields = ('id', 'title', 'subtitle', 'episodes', 'created', 'likes', 'views', 'thumbnailImage')
+        fields = ('id', 'title', 'subtitle', 'name', 'episodes', 'created', 'likes', 'views', 'thumbnailImage')
 
     def get_thumbnailImage(self, obj):
         return obj.thumbnail.url
