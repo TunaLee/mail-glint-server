@@ -12,7 +12,6 @@ from mail_glint.bases.admin import Admin
 @admin.register(User)
 class UserAdmin(Admin, UserAdmin):
     list_display = ('email', 'username')
-    search_fields = ('username',)
 
     fieldsets = (
         ("정보", {"fields": ('email', 'username', 'password', 'thumbnail', 'description')}),
