@@ -8,8 +8,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 from config.docs import schema_view
 from config.redirects import redirect_admin_view, redirect_swagger_view
 
-admin.site.site_header = "TEMPLATE"
-admin.site.site_title = "TEMPLATE"
+admin.site.site_header = "GLINT_MAGAZINE"
+admin.site.site_title = "GLINT_MAGAZINE"
 admin.site.index_title = "관리자 페이지"
 
 urlpatterns = (
