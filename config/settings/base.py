@@ -393,9 +393,14 @@ REST_FRAMEWORK = {
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = default_methods
-CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "https://han.glint.team"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "https://han.glint.team", 'https://api-han.glint.team']
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
