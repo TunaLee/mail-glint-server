@@ -15,4 +15,4 @@ class SubscriberAuthenticationSerializer(ModelSerializer):
 
     class Meta:
         model = SubscriberAuthentication
-        fields = ('email', 'verify_code')
+        fields = ('email',)
