@@ -53,10 +53,10 @@ class HumanArticleViewSet(mixins.RetrieveModelMixin,
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     ordering_fields = ['-created']
     # filterset_class = HumanArticlesFilter
-    @swagger_auto_schema(**retrieve_decorator(title=_('기사 상세'), serializer=HumanArticleRetrieveSerializer))
+    @swagger_auto_schema(**retrieve_decorator(title=_('인물 기사 상세'), serializer=HumanArticleRetrieveSerializer))
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(self, request, *args, **kwargs)
 
-    @swagger_auto_schema(**list_decorator(title=_('기사 목록'), serializer=HumanArticleListSerializer))
+    @swagger_auto_schema(**list_decorator(title=_('인물 기사 목록'), serializer=HumanArticleListSerializer))
     def list(self, request, *args, **kwargs):
         return super().list(self, request, *args, **kwargs)
